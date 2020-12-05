@@ -17,6 +17,11 @@ struct trip_calculatorApp: App {
                   Image(systemName: "list.dash")
                   Text("Students")
                }
+            CalculateView()
+               .tabItem {
+                  Image(systemName: "dollarsign.circle")
+                  Text("Calculate")
+               }
          }
       }
    }

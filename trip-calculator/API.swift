@@ -70,6 +70,19 @@ struct MessageResponse: Codable {
    }
 }
 
+// MARK: - StudentTransactions
+struct StudentTransactions: Codable {
+    let totalAmount: Int
+    let averageAmount: Double
+    let txns: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case totalAmount = "total_amount"
+        case averageAmount = "average_amount"
+        case txns
+    }
+}
+
 struct Agent {
    struct Response<T> {
       let value: T
@@ -106,6 +119,7 @@ extension API {
          .map(\.value)
          .eraseToAnyPublisher()
    }
+   
    static func getExpenseItems(studentID: Int) -> AnyPublisher<ExpenseItemList, Error> {
       var request = URLRequest(
          url: base.appendingPathComponent("expense/\(studentID)"),
@@ -173,6 +187,19 @@ extension API {
          timeoutInterval: 10.0
       )
       request.httpMethod = "DELETE"
+      request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+      return agent.run(request)
+         .map(\.value)
+         .eraseToAnyPublisher()
+   }
+   
+   static func getTransactions() -> AnyPublisher<StudentTransactions, Error> {
+      var request = URLRequest(
+         url: base.appendingPathComponent("calculate"),
+         cachePolicy: .useProtocolCachePolicy,
+         timeoutInterval: 10.0
+      )
+      request.httpMethod = "GET"
       request.allHTTPHeaderFields = ["Content-Type": "application/json"]
       return agent.run(request)
          .map(\.value)
