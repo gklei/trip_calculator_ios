@@ -72,8 +72,7 @@ struct MessageResponse: Codable {
 
 // MARK: - StudentTransactions
 struct StudentTransactions: Codable {
-    let totalAmount: Int
-    let averageAmount: Double
+    let totalAmount, averageAmount: Double
     let txns: [String]
 
     enum CodingKeys: String, CodingKey {
