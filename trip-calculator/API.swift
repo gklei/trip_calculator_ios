@@ -42,6 +42,15 @@ struct ExpenseItem: Codable, Identifiable {
    }
 }
 
+struct CreateExpenseItem: Codable {
+   let name: String
+   let amount: Float
+   
+   enum CodingKeys: String, CodingKey {
+      case name, amount
+   }
+}
+
 // MARK: - ExpenseItemList
 struct ExpenseItemList: Codable {
    let totalAmount: Float
@@ -121,6 +130,23 @@ extension API {
       
       var request = URLRequest(
          url: base.appendingPathComponent("student"),
+         cachePolicy: .useProtocolCachePolicy,
+         timeoutInterval: 10.0
+      )
+      request.httpMethod = "POST"
+      request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+      request.httpBody = postData
+      return agent.run(request)
+         .map(\.value)
+         .eraseToAnyPublisher()
+   }
+   
+   static func createExpenseItem(studentID: Int, item: CreateExpenseItem) -> AnyPublisher<ExpenseItem, Error> {
+      let encoder = JSONEncoder()
+      guard let postData = try? encoder.encode(item) else { fatalError() }
+      
+      var request = URLRequest(
+         url: base.appendingPathComponent("expense/\(studentID)"),
          cachePolicy: .useProtocolCachePolicy,
          timeoutInterval: 10.0
       )

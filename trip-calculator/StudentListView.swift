@@ -27,7 +27,7 @@ struct StudentListView: View {
       NavigationView {
          List {
             ForEach(viewModel.students) { student in
-               NavigationLink(destination: ExpenseItemListView(student: student)) {
+               NavigationLink(destination: ExpenseItemListView(viewModel: ExpenseItemListView.ViewModel(student: student))) {
                   Text(student.name)
                }
             }

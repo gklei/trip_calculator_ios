@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 
 struct ExpenseItemListView: View {
-   let student: Student
    @ObservedObject var viewModel: ViewModel
    @State var showNewItemAlert = false
    
@@ -20,11 +19,6 @@ struct ExpenseItemListView: View {
       }) {
          Image(systemName: "plus")
       }
-   }
-   
-   init(student: Student) {
-      self.student = student
-      self.viewModel = ViewModel(student: student)
    }
    
    var body: some View {
@@ -58,8 +52,8 @@ struct ExpenseItemListView: View {
 
 extension ExpenseItemListView {
    class ViewModel: ObservableObject {
-      @Published var items: [ExpenseItem] = []
       let student: Student
+      @Published var items: [ExpenseItem] = []
       private var disposables = Set<AnyCancellable>()
       
       var totalView: some View {
@@ -84,7 +78,13 @@ extension ExpenseItemListView {
       }
       
       func onAdd(name: String, amount: Float) {
-         print("create item: \(name), \(amount)")
+         let item = CreateExpenseItem(name: name, amount: amount)
+         API.createExpenseItem(studentID: student.id, item: item)
+            .sink { (_) in
+            } receiveValue: { _ in
+               self.getItems()
+            }
+            .store(in: &disposables)
       }
       
       func onDelete(offsets: IndexSet) {
