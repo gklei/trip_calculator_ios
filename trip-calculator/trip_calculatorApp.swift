@@ -9,8 +9,8 @@ import SwiftUI
 
 @main
 struct trip_calculatorApp: App {
-    var body: some Scene {
-        WindowGroup {
+   var body: some Scene {
+      WindowGroup {
          TabView {
             StudentListView()
                .tabItem {
@@ -18,6 +18,6 @@ struct trip_calculatorApp: App {
                   Text("Students")
                }
          }
-        }
-    }
+      }
+   }
 }
