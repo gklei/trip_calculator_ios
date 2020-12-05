@@ -89,4 +89,34 @@ extension API {
          .map(\.value)
          .eraseToAnyPublisher()
    }
+   
+   static func deleteStudent(id: Int) -> AnyPublisher<StudentList, Error> {
+      var request = URLRequest(
+         url: base.appendingPathComponent("student/\(id)"),
+         cachePolicy: .useProtocolCachePolicy,
+         timeoutInterval: 10.0
+      )
+      request.httpMethod = "DELETE"
+      request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+      return agent.run(request)
+         .map(\.value)
+         .eraseToAnyPublisher()
+   }
+   
+   static func createStudent(name: String) -> AnyPublisher<Student, Error> {
+      let encoder = JSONEncoder()
+      guard let postData = try? encoder.encode(["name": name]) else { fatalError() }
+      
+      var request = URLRequest(
+         url: base.appendingPathComponent("student"),
+         cachePolicy: .useProtocolCachePolicy,
+         timeoutInterval: 10.0
+      )
+      request.httpMethod = "POST"
+      request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+      request.httpBody = postData
+      return agent.run(request)
+         .map(\.value)
+         .eraseToAnyPublisher()
+   }
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct trip_calculatorApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StudentListView()
         }
     }
 }
