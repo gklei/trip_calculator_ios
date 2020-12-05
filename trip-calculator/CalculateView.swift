@@ -13,8 +13,14 @@ struct CalculateView: View {
     var body: some View {
       NavigationView {
          List {
-            ForEach(viewModel.transactions, id: \.self) { txn in
-               Text(txn)
+            ForEach(viewModel.transactions) { txn in
+               HStack {
+                  Text(txn.from.name)
+                  Image(systemName: "arrow.right")
+                  Text(txn.to.name)
+                  Spacer()
+                  Text("$\(txn.amount, specifier: "%.2f")")
+               }
             }
          }
          .listStyle(PlainListStyle())
@@ -28,7 +34,7 @@ struct CalculateView: View {
 
 extension CalculateView {
    class ViewModel: ObservableObject {
-      @Published var transactions: [String] = []
+      @Published var transactions: [StudentTransactions.Transaction] = []
       private var disposables = Set<AnyCancellable>()
       
       func getTransactions() {

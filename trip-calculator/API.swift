@@ -13,7 +13,7 @@ struct Student: Codable, Identifiable {
    let id: Int
    let name: String
    let totalExpenseAmount: Float
-   let expenseItems: [ExpenseItem]
+   let expenseItems: [ExpenseItem]?
    
    enum CodingKeys: String, CodingKey {
       case id, name
@@ -72,14 +72,20 @@ struct MessageResponse: Codable {
 
 // MARK: - StudentTransactions
 struct StudentTransactions: Codable {
-    let totalAmount, averageAmount: Double
-    let txns: [String]
-
-    enum CodingKeys: String, CodingKey {
-        case totalAmount = "total_amount"
-        case averageAmount = "average_amount"
-        case txns
-    }
+   struct Transaction: Codable, Identifiable {
+      let from, to: Student
+      let amount: Double
+      let id = UUID()
+   }
+   
+   let totalAmount, averageAmount: Double
+   let txns: [Transaction]
+   
+   enum CodingKeys: String, CodingKey {
+      case totalAmount = "total_amount"
+      case averageAmount = "average_amount"
+      case txns
+   }
 }
 
 struct Agent {
