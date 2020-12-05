@@ -12,14 +12,33 @@ struct CalculateView: View {
    @StateObject var viewModel = ViewModel()
     var body: some View {
       NavigationView {
-         List {
-            ForEach(viewModel.transactions) { txn in
-               HStack {
-                  Text(txn.from.name)
-                  Image(systemName: "arrow.right")
-                  Text(txn.to.name)
-                  Spacer()
-                  Text("$\(txn.amount, specifier: "%.2f")")
+         Form {
+            Section(header: Text("Overview")) {
+               List {
+                  HStack {
+                     Text("Total spent")
+                     Spacer()
+                     Text("$\(viewModel.totalSpent, specifier: "%.2f")")
+                  }
+                  HStack {
+                     Text("Average cost")
+                     Spacer()
+                     Text("$\(viewModel.averageCost, specifier: "%.2f")")
+                  }
+               }
+            }
+            Section(header: Text("Transactions")) {
+               List {
+                  ForEach(viewModel.transactions.txns) { txn in
+                     HStack {
+                        Text(txn.from.name)
+                        Image(systemName: "arrow.right.circle.fill")
+                           .foregroundColor(.green)
+                        Text(txn.to.name)
+                        Spacer()
+                        Text("$\(txn.amount, specifier: "%.2f")")
+                     }
+                  }
                }
             }
          }
@@ -27,21 +46,29 @@ struct CalculateView: View {
          .onAppear(perform: {
             viewModel.getTransactions()
          })
-         .navigationBarTitle("Transactions")
+         .navigationBarTitle("Calculate")
       }
     }
 }
 
 extension CalculateView {
    class ViewModel: ObservableObject {
-      @Published var transactions: [StudentTransactions.Transaction] = []
+      @Published var transactions: StudentTransactions = StudentTransactions(totalAmount: 0, averageAmount: 0, txns: [])
       private var disposables = Set<AnyCancellable>()
+      
+      var averageCost: Double {
+         return transactions.averageAmount
+      }
+      
+      var totalSpent: Double {
+         return transactions.totalAmount
+      }
       
       func getTransactions() {
          API.getTransactions()
             .sink { (_) in
             } receiveValue: { (result) in
-               self.transactions = result.txns
+               self.transactions = result
             }
             .store(in: &disposables)
       }
