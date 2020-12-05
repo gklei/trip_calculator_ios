@@ -28,7 +28,7 @@ struct StudentList: Codable {
 }
 
 // MARK: - ExpenseItem
-struct ExpenseItem: Codable {
+struct ExpenseItem: Codable, Identifiable {
    let id: Int
    let name: String
    let studentID: Int

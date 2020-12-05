@@ -11,7 +11,13 @@ import SwiftUI
 struct trip_calculatorApp: App {
     var body: some Scene {
         WindowGroup {
+         TabView {
             StudentListView()
+               .tabItem {
+                  Image(systemName: "list.dash")
+                  Text("Students")
+               }
+         }
         }
     }
 }

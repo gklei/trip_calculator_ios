@@ -93,14 +93,6 @@ extension StudentListView {
    }
 }
 
-struct ExpenseItemListView: View {
-   let student: Student
-   
-   var body: some View {
-      Text("Hello")
-   }
-}
-
 struct ContentView_Previews: PreviewProvider {
    static var previews: some View {
       StudentListView()
