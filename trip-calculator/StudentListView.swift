@@ -9,14 +9,14 @@ import SwiftUI
 import Combine
 
 class ViewModel: ObservableObject {
-   @Published var studentList: StudentList = StudentList(students: [])
+   @Published var students: [Student] = []
    private var disposables = Set<AnyCancellable>()
    
    func getStudents() {
       API.getStudents()
          .sink { (_) in
          } receiveValue: { (list) in
-            self.studentList = list
+            self.students = list.students
          }
          .store(in: &disposables)
    }
@@ -34,11 +34,11 @@ class ViewModel: ObservableObject {
       guard offsets.count == 1 else { return }
       let offset = offsets.first!
       withAnimation {
-         let student = studentList.students[offset]
+         let student = students[offset]
          API.deleteStudent(id: student.id)
             .sink { (_) in
             } receiveValue: { (list) in
-               self.studentList = list
+               self.students = list.students
             }
             .store(in: &disposables)
       }
@@ -63,14 +63,16 @@ struct StudentListView: View {
    var body: some View {
       NavigationView {
          List {
-            ForEach(viewModel.studentList.students) { student in
-               Text(student.name)
+            ForEach(viewModel.students) { student in
+               NavigationLink(destination: ExpenseItemListView(student: student)) {
+                  Text(student.name)
+               }
             }
             .onDelete(perform: viewModel.onDelete)
          }
          .navigationBarTitle("Trip Calculator")
          .navigationBarItems(
-            leading: EditButton().disabled(viewModel.studentList.students.count == 0 && editMode == .inactive),
+            leading: EditButton().disabled(viewModel.students.count == 0 && editMode == .inactive),
             trailing: addButton
          )
          .listStyle(PlainListStyle())
@@ -86,6 +88,14 @@ struct StudentListView: View {
             viewModel.onAdd(name: name)
          })
       )
+   }
+}
+
+struct ExpenseItemListView: View {
+   let student: Student
+   
+   var body: some View {
+      Text("Hello")
    }
 }
 
