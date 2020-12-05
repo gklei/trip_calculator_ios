@@ -88,6 +88,17 @@ extension ExpenseItemListView {
       }
       
       func onDelete(offsets: IndexSet) {
+         guard offsets.count == 1 else { return }
+         let offset = offsets.first!
+         withAnimation {
+            let item = items[offset]
+            API.deleteExpenseItem(id: item.id)
+               .sink { (_) in
+               } receiveValue: { _ in
+                  self.getItems()
+               }
+               .store(in: &disposables)
+         }
       }
    }
 }

@@ -62,6 +62,14 @@ struct ExpenseItemList: Codable {
    }
 }
 
+// MARK: - MessageResponse
+struct MessageResponse: Codable {
+   let message: String
+   enum CodingKeys: String, CodingKey {
+      case message
+   }
+}
+
 struct Agent {
    struct Response<T> {
       let value: T
@@ -153,6 +161,19 @@ extension API {
       request.httpMethod = "POST"
       request.allHTTPHeaderFields = ["Content-Type": "application/json"]
       request.httpBody = postData
+      return agent.run(request)
+         .map(\.value)
+         .eraseToAnyPublisher()
+   }
+   
+   static func deleteExpenseItem(id: Int) -> AnyPublisher<MessageResponse, Error> {
+      var request = URLRequest(
+         url: base.appendingPathComponent("expense/\(id)"),
+         cachePolicy: .useProtocolCachePolicy,
+         timeoutInterval: 10.0
+      )
+      request.httpMethod = "DELETE"
+      request.allHTTPHeaderFields = ["Content-Type": "application/json"]
       return agent.run(request)
          .map(\.value)
          .eraseToAnyPublisher()
