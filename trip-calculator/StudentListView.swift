@@ -27,9 +27,8 @@ struct StudentListView: View {
       NavigationView {
          List {
             ForEach(viewModel.students) { student in
-               NavigationLink(destination: ExpenseItemListView(viewModel: ExpenseItemListView.ViewModel(student: student))) {
-                  Text(student.name)
-               }
+               StudentRowView(student: student)
+                  .frame(height: 60)
             }
             .onDelete(perform: viewModel.onDelete)
          }
@@ -51,6 +50,25 @@ struct StudentListView: View {
             viewModel.onAdd(name: name)
          })
       )
+   }
+}
+
+struct StudentRowView: View {
+   let student: Student
+   
+   var body: some View {
+      NavigationLink(destination: ExpenseItemListView(viewModel: ExpenseItemListView.ViewModel(student: student))) {
+         HStack {
+            VStack(alignment: .leading) {
+               Text(student.name)
+               Text("\(student.expenseItems?.count ?? 0) Items")
+                  .font(.subheadline)
+                  .foregroundColor(.secondary)
+            }
+            Spacer()
+            Text("$\(student.totalExpenseAmount, specifier: "%.2f")")
+         }
+      }
    }
 }
 
