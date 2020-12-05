@@ -45,6 +45,9 @@ struct ExpenseItemListView: View {
             viewModel.onAdd(name: name, amount: amount)
          })
       )
+      .onAppear(perform: {
+         viewModel.getItems()
+      })
       .edgesIgnoringSafeArea(.top)
       .navigationBarTitle("Expense Items", displayMode: .inline)
       .navigationBarItems(
@@ -69,10 +72,15 @@ extension ExpenseItemListView {
       
       init(student: Student) {
          self.student = student
-         self.items = student.expenseItems
       }
       
       func getItems() {
+         API.getExpenseItems(studentID: student.id)
+            .sink { (_) in
+            } receiveValue: { (list) in
+               self.items = list.expenseItems
+            }
+            .store(in: &disposables)
       }
       
       func onAdd(name: String, amount: Float) {

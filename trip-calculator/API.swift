@@ -89,6 +89,18 @@ extension API {
          .map(\.value)
          .eraseToAnyPublisher()
    }
+   static func getExpenseItems(studentID: Int) -> AnyPublisher<ExpenseItemList, Error> {
+      var request = URLRequest(
+         url: base.appendingPathComponent("expense/\(studentID)"),
+         cachePolicy: .useProtocolCachePolicy,
+         timeoutInterval: 10.0
+      )
+      request.httpMethod = "GET"
+      request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+      return agent.run(request)
+         .map(\.value)
+         .eraseToAnyPublisher()
+   }
    
    static func deleteStudent(id: Int) -> AnyPublisher<StudentList, Error> {
       var request = URLRequest(
