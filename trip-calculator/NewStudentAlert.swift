@@ -22,12 +22,12 @@ extension UIAlertController {
    }
 }
 
-struct AlertWrapper<Content: View>: UIViewControllerRepresentable {
+struct StudentAlertWrapper<Content: View>: UIViewControllerRepresentable {
    @Binding var isPresented: Bool
    let alert: NewStudentAlert
    let content: Content
    
-   func makeUIViewController(context: UIViewControllerRepresentableContext<AlertWrapper>) -> UIHostingController<Content> {
+   func makeUIViewController(context: UIViewControllerRepresentableContext<StudentAlertWrapper>) -> UIHostingController<Content> {
       UIHostingController(rootView: content)
    }
    
@@ -43,7 +43,7 @@ struct AlertWrapper<Content: View>: UIViewControllerRepresentable {
    }
    
    
-   func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: UIViewControllerRepresentableContext<AlertWrapper>) {
+   func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: UIViewControllerRepresentableContext<StudentAlertWrapper>) {
       uiViewController.rootView = content
       if isPresented && uiViewController.presentedViewController == nil {
          var alert = self.alert
@@ -74,6 +74,6 @@ public struct NewStudentAlert {
 
 extension View {
    public func alert(isPresented: Binding<Bool>, _ alert: NewStudentAlert) -> some View {
-      AlertWrapper(isPresented: isPresented, alert: alert, content: self)
+      StudentAlertWrapper(isPresented: isPresented, alert: alert, content: self)
    }
 }
