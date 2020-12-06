@@ -13,12 +13,6 @@ struct StudentListView: View {
    @StateObject var viewModel = ViewModel()
    @State var showNewActivityAlert: Bool = false
    
-   var refresh: Binding<Bool> = Binding(
-      get: { return false },
-      set: { value in
-      }
-   )
-   
    @State private var editMode = EditMode.inactive
    private var addButton: some View {
       switch editMode {
