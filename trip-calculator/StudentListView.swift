@@ -18,7 +18,6 @@ struct StudentListView: View {
       set: { value in
       }
    )
-
    
    @State private var editMode = EditMode.inactive
    private var addButton: some View {
@@ -100,31 +99,6 @@ extension StudentListView {
                   self.students = list.students
                }
                .store(in: &disposables)
-         }
-      }
-   }
-}
-
-struct StudentRowView: View {
-   let student: Student
-   @Binding var refresh: Bool
-   
-   var body: some View {
-      NavigationLink(
-         destination: ExpenseItemListView(
-            viewModel: ExpenseItemListView.ViewModel(student: student),
-            refresh: $refresh
-         )
-      ) {
-         HStack {
-            VStack(alignment: .leading) {
-               Text(student.name)
-               Text("\(student.expenseItems?.count ?? 0) Items")
-                  .font(.subheadline)
-                  .foregroundColor(.secondary)
-            }
-            Spacer()
-            Text("$\(student.totalExpenseAmount, specifier: "%.2f")")
          }
       }
    }
