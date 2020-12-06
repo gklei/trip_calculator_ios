@@ -12,8 +12,8 @@ struct StudentListView: View {
    @State var disposables = Set<AnyCancellable>()
    @StateObject var viewModel = ViewModel()
    @State var showNewActivityAlert: Bool = false
-   
    @State private var editMode = EditMode.inactive
+   
    private var addButton: some View {
       switch editMode {
       case .inactive: return AnyView(Button(action: {
@@ -46,15 +46,17 @@ struct StudentListView: View {
             .environment(\.editMode, $editMode)
          }
       }
-      .onAppear(perform: {
-         viewModel.getStudents()
-      })
+      .onAppear(perform: viewModel.getStudents)
       .alert(
          isPresented: $showNewActivityAlert,
-         NewStudentAlert(title: "New Student", message: "Enter a student name", placeholder: "Name", action: { (result) in
-            guard let name = result else { return }
-            viewModel.onAdd(name: name)
-         })
+         NewStudentAlert(
+            title: "New Student",
+            message: "Enter a student name",
+            placeholder: "Name",
+            action: {
+               guard let name = $0 else { return }
+               viewModel.onAdd(name: name)
+            })
       )
    }
 }
@@ -85,15 +87,13 @@ extension StudentListView {
       func onDelete(offsets: IndexSet) {
          guard offsets.count == 1 else { return }
          let offset = offsets.first!
-         withAnimation {
-            let student = students[offset]
-            API.deleteStudent(id: student.id)
-               .sink { (_) in
-               } receiveValue: { (list) in
-                  self.students = list.students
-               }
-               .store(in: &disposables)
-         }
+         let student = students[offset]
+         API.deleteStudent(id: student.id)
+            .sink { (_) in
+            } receiveValue: { (list) in
+               self.students = list.students
+            }
+            .store(in: &disposables)
       }
    }
 }

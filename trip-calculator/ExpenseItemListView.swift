@@ -37,21 +37,20 @@ struct ExpenseItemListView: View {
       }
       .itemAlert(
          isPresented: $showNewItemAlert,
-         NewItemAlert(title: "New Expense", message: "Create a new item", action: { (name, amount) in
-            guard let name = name, let amount = amount else { return }
-            viewModel.onAdd(name: name, amount: amount)
+         NewItemAlert(
+            title: "New Expense",
+            message: "Create a new item",
+            action: {
+               guard let name = $0, let amount = $1 else { return }
+               viewModel.onAdd(name: name, amount: amount)
          })
       )
-      .onAppear {
-         viewModel.getItems()
-      }
+      .onAppear(perform: viewModel.getItems)
       .onDisappear {
          refresh.toggle()
       }
       .navigationBarTitle(viewModel.navigationBarTitle, displayMode: .inline)
-      .navigationBarItems(
-         trailing: addButton
-      )
+      .navigationBarItems(trailing: addButton)
    }
 }
 
@@ -91,15 +90,13 @@ extension ExpenseItemListView {
       func onDelete(offsets: IndexSet) {
          guard offsets.count == 1 else { return }
          let offset = offsets.first!
-         withAnimation {
-            let item = items[offset]
-            API.deleteExpenseItem(id: item.id)
-               .sink { (_) in
-               } receiveValue: { _ in
-                  self.getItems()
-               }
-               .store(in: &disposables)
-         }
+         let item = items[offset]
+         API.deleteExpenseItem(id: item.id)
+            .sink { (_) in
+            } receiveValue: { _ in
+               self.getItems()
+            }
+            .store(in: &disposables)
       }
    }
 }
