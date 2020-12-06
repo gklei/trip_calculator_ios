@@ -13,6 +13,13 @@ struct StudentListView: View {
    @StateObject var viewModel = ViewModel()
    @State var showNewActivityAlert: Bool = false
    
+   var refresh: Binding<Bool> = Binding(
+      get: { return false },
+      set: { value in
+      }
+   )
+
+   
    @State private var editMode = EditMode.inactive
    private var addButton: some View {
       switch editMode {
@@ -24,21 +31,27 @@ struct StudentListView: View {
    }
    
    var body: some View {
+      let refreshBinding = Binding(
+         get: { return false },
+         set: { _ in self.viewModel.getStudents() }
+      )
       NavigationView {
-         List {
-            ForEach(viewModel.students) { student in
-               StudentRowView(student: student)
-                  .frame(height: 60)
+         VStack {
+            List {
+               ForEach(viewModel.students) { student in
+                  StudentRowView(student: student, refresh: refreshBinding)
+                     .frame(height: 60)
+               }
+               .onDelete(perform: viewModel.onDelete)
             }
-            .onDelete(perform: viewModel.onDelete)
+            .navigationBarTitle("Trip Calculator")
+            .navigationBarItems(
+               leading: EditButton().disabled(viewModel.students.count == 0 && editMode == .inactive),
+               trailing: addButton
+            )
+            .listStyle(PlainListStyle())
+            .environment(\.editMode, $editMode)
          }
-         .navigationBarTitle("Trip Calculator")
-         .navigationBarItems(
-            leading: EditButton().disabled(viewModel.students.count == 0 && editMode == .inactive),
-            trailing: addButton
-         )
-         .listStyle(PlainListStyle())
-         .environment(\.editMode, $editMode)
       }
       .onAppear(perform: {
          viewModel.getStudents()
@@ -50,29 +63,6 @@ struct StudentListView: View {
             viewModel.onAdd(name: name)
          })
       )
-   }
-}
-
-struct StudentRowView: View {
-   let student: Student
-   
-   var body: some View {
-      NavigationLink(
-         destination: ExpenseItemListView(
-            viewModel: ExpenseItemListView.ViewModel(student: student)
-         )
-      ) {
-         HStack {
-            VStack(alignment: .leading) {
-               Text(student.name)
-               Text("\(student.expenseItems?.count ?? 0) Items")
-                  .font(.subheadline)
-                  .foregroundColor(.secondary)
-            }
-            Spacer()
-            Text("$\(student.totalExpenseAmount, specifier: "%.2f")")
-         }
-      }
    }
 }
 
@@ -110,6 +100,31 @@ extension StudentListView {
                   self.students = list.students
                }
                .store(in: &disposables)
+         }
+      }
+   }
+}
+
+struct StudentRowView: View {
+   let student: Student
+   @Binding var refresh: Bool
+   
+   var body: some View {
+      NavigationLink(
+         destination: ExpenseItemListView(
+            viewModel: ExpenseItemListView.ViewModel(student: student),
+            refresh: $refresh
+         )
+      ) {
+         HStack {
+            VStack(alignment: .leading) {
+               Text(student.name)
+               Text("\(student.expenseItems?.count ?? 0) Items")
+                  .font(.subheadline)
+                  .foregroundColor(.secondary)
+            }
+            Spacer()
+            Text("$\(student.totalExpenseAmount, specifier: "%.2f")")
          }
       }
    }

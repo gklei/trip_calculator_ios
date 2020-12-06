@@ -11,6 +11,7 @@ import Combine
 struct ExpenseItemListView: View {
    @ObservedObject var viewModel: ViewModel
    @State var showNewItemAlert = false
+   @Binding var refresh: Bool
    
    @State private var editMode = EditMode.inactive
    private var addButton: some View {
@@ -41,9 +42,12 @@ struct ExpenseItemListView: View {
             viewModel.onAdd(name: name, amount: amount)
          })
       )
-      .onAppear(perform: {
+      .onAppear {
          viewModel.getItems()
-      })
+      }
+      .onDisappear {
+         refresh.toggle()
+      }
       .navigationBarTitle(viewModel.navigationBarTitle, displayMode: .inline)
       .navigationBarItems(
          trailing: addButton
