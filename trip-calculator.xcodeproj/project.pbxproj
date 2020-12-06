@@ -65,13 +65,13 @@
 			isa = PBXGroup;
 			children = (
 				8E841D9E25794FA50068FFAD /* trip_calculatorApp.swift */,
+				8E841DAE25794FD90068FFAD /* API.swift */,
 				8E841DA025794FA50068FFAD /* StudentListView.swift */,
 				8E426CD6257C90BF00B308A2 /* StudentRowView.swift */,
-				8E426CD3257C3C0800B308A2 /* CalculateView.swift */,
 				8E426CCD257C293D00B308A2 /* ExpenseItemListView.swift */,
+				8E426CD3257C3C0800B308A2 /* CalculateView.swift */,
 				8E426CC7257BE32F00B308A2 /* TextAlert.swift */,
 				8E426CD0257C323100B308A2 /* NewItemAlert.swift */,
-				8E841DAE25794FD90068FFAD /* API.swift */,
 				8E841DA225794FA90068FFAD /* Assets.xcassets */,
 				8E841DA725794FA90068FFAD /* Info.plist */,
 				8E841DA425794FA90068FFAD /* Preview Content */,
