@@ -34,6 +34,7 @@ struct CalculateView: View {
                         Text(txn.from.name)
                         Image(systemName: "arrow.right.circle.fill")
                            .foregroundColor(.green)
+                           .padding([.leading, .trailing], 6)
                         Text(txn.to.name)
                         Spacer()
                         Text("$\(txn.amount, specifier: "%.2f")")

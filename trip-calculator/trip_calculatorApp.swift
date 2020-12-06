@@ -17,6 +17,7 @@ struct trip_calculatorApp: App {
                   Image(systemName: "list.dash")
                   Text("Students")
                }
+               .edgesIgnoringSafeArea(.top)
             CalculateView()
                .tabItem {
                   Image(systemName: "dollarsign.circle")

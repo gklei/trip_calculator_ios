@@ -57,7 +57,11 @@ struct StudentRowView: View {
    let student: Student
    
    var body: some View {
-      NavigationLink(destination: ExpenseItemListView(viewModel: ExpenseItemListView.ViewModel(student: student))) {
+      NavigationLink(
+         destination: ExpenseItemListView(
+            viewModel: ExpenseItemListView.ViewModel(student: student)
+         )
+      ) {
          HStack {
             VStack(alignment: .leading) {
                Text(student.name)

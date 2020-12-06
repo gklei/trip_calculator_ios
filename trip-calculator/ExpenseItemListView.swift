@@ -28,7 +28,9 @@ struct ExpenseItemListView: View {
                Text(item.name)
                Spacer()
                Text("$\(item.amount, specifier: "%.2f")")
+                  .foregroundColor(.secondary)
             }
+            .frame(height: 60)
          }
          .onDelete(perform: viewModel.onDelete)
       }
@@ -42,8 +44,7 @@ struct ExpenseItemListView: View {
       .onAppear(perform: {
          viewModel.getItems()
       })
-      .edgesIgnoringSafeArea(.top)
-      .navigationBarTitle("Expense Items", displayMode: .inline)
+      .navigationBarTitle(viewModel.navigationBarTitle, displayMode: .inline)
       .navigationBarItems(
          trailing: addButton
       )
@@ -55,6 +56,10 @@ extension ExpenseItemListView {
       let student: Student
       @Published var items: [ExpenseItem] = []
       private var disposables = Set<AnyCancellable>()
+      
+      var navigationBarTitle: String {
+         return student.name
+      }
       
       var totalView: some View {
          HStack {
