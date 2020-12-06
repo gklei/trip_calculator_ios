@@ -65,14 +65,6 @@ extension ExpenseItemListView {
          return student.name
       }
       
-      var totalView: some View {
-         HStack {
-            Text("TOTAL")
-            Spacer()
-            Text("$\(items.reduce(0, { $0 + $1.amount }), specifier: "%.2f")")
-         }
-      }
-      
       init(student: Student) {
          self.student = student
       }
