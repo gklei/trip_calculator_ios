@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 
 extension UIAlertController {
-   convenience init(alert: TextAlert) {
+   convenience init(alert: NewStudentAlert) {
       self.init(title: alert.title, message: alert.message, preferredStyle: .alert)
       addTextField { $0.placeholder = alert.placeholder }
       addAction(UIAlertAction(title: alert.cancel, style: .cancel) { _ in
@@ -24,7 +24,7 @@ extension UIAlertController {
 
 struct AlertWrapper<Content: View>: UIViewControllerRepresentable {
    @Binding var isPresented: Bool
-   let alert: TextAlert
+   let alert: NewStudentAlert
    let content: Content
    
    func makeUIViewController(context: UIViewControllerRepresentableContext<AlertWrapper>) -> UIHostingController<Content> {
@@ -63,7 +63,7 @@ struct AlertWrapper<Content: View>: UIViewControllerRepresentable {
    }
 }
 
-public struct TextAlert {
+public struct NewStudentAlert {
    public var title: String
    public var message: String
    public var placeholder: String = ""
@@ -73,7 +73,7 @@ public struct TextAlert {
 }
 
 extension View {
-   public func alert(isPresented: Binding<Bool>, _ alert: TextAlert) -> some View {
+   public func alert(isPresented: Binding<Bool>, _ alert: NewStudentAlert) -> some View {
       AlertWrapper(isPresented: isPresented, alert: alert, content: self)
    }
 }
