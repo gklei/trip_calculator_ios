@@ -57,7 +57,7 @@ struct StudentListView: View {
       })
       .alert(
          isPresented: $showNewActivityAlert,
-         TextAlert(title: "Student Name", message: "Enter a new name", action: { (result) in
+         TextAlert(title: "New Student", message: "Enter a student name", placeholder: "Name", action: { (result) in
             guard let name = result else { return }
             viewModel.onAdd(name: name)
          })

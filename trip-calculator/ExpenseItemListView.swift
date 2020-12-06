@@ -37,7 +37,7 @@ struct ExpenseItemListView: View {
       }
       .itemAlert(
          isPresented: $showNewItemAlert,
-         NewItemAlert(title: "Item Name", message: "Enter a new item", action: { (name, amount) in
+         NewItemAlert(title: "New Expense", message: "Create a new item", action: { (name, amount) in
             guard let name = name, let amount = amount else { return }
             viewModel.onAdd(name: name, amount: amount)
          })

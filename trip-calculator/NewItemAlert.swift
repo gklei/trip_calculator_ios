@@ -11,8 +11,8 @@ import SwiftUI
 extension UIAlertController {
    convenience init(alert: NewItemAlert) {
       self.init(title: alert.title, message: alert.message, preferredStyle: .alert)
-      addTextField { $0.placeholder = "Item Name" }
-      addTextField { $0.placeholder = "Item Amount"; $0.keyboardType = .decimalPad }
+      addTextField { $0.placeholder = "Name" }
+      addTextField { $0.placeholder = "Amount"; $0.keyboardType = .decimalPad }
       addAction(UIAlertAction(title: alert.cancel, style: .cancel) { _ in
          alert.action(nil, nil)
       })
