@@ -12,6 +12,7 @@
 		8E426CD1257C323100B308A2 /* NewItemAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E426CD0257C323100B308A2 /* NewItemAlert.swift */; };
 		8E426CD4257C3C0800B308A2 /* CalculateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E426CD3257C3C0800B308A2 /* CalculateView.swift */; };
 		8E426CD7257C90BF00B308A2 /* StudentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E426CD6257C90BF00B308A2 /* StudentRowView.swift */; };
+		8E426CDB257C92A400B308A2 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E426CDA257C92A400B308A2 /* APIModels.swift */; };
 		8E841D9F25794FA50068FFAD /* trip_calculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E841D9E25794FA50068FFAD /* trip_calculatorApp.swift */; };
 		8E841DA125794FA50068FFAD /* StudentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E841DA025794FA50068FFAD /* StudentListView.swift */; };
 		8E841DA325794FA90068FFAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E841DA225794FA90068FFAD /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		8E426CD0257C323100B308A2 /* NewItemAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewItemAlert.swift; sourceTree = "<group>"; };
 		8E426CD3257C3C0800B308A2 /* CalculateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateView.swift; sourceTree = "<group>"; };
 		8E426CD6257C90BF00B308A2 /* StudentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentRowView.swift; sourceTree = "<group>"; };
+		8E426CDA257C92A400B308A2 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		8E841D9B25794FA50068FFAD /* trip-calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "trip-calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E841D9E25794FA50068FFAD /* trip_calculatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trip_calculatorApp.swift; sourceTree = "<group>"; };
 		8E841DA025794FA50068FFAD /* StudentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListView.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			children = (
 				8E841D9E25794FA50068FFAD /* trip_calculatorApp.swift */,
 				8E841DAE25794FD90068FFAD /* API.swift */,
+				8E426CDA257C92A400B308A2 /* APIModels.swift */,
 				8E841DA025794FA50068FFAD /* StudentListView.swift */,
 				8E426CD6257C90BF00B308A2 /* StudentRowView.swift */,
 				8E426CCD257C293D00B308A2 /* ExpenseItemListView.swift */,
@@ -156,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E426CDB257C92A400B308A2 /* APIModels.swift in Sources */,
 				8E426CD1257C323100B308A2 /* NewItemAlert.swift in Sources */,
 				8E426CD7257C90BF00B308A2 /* StudentRowView.swift in Sources */,
 				8E841DA125794FA50068FFAD /* StudentListView.swift in Sources */,
